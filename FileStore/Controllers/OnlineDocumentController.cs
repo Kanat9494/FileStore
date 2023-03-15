@@ -4,17 +4,17 @@ namespace FileStore.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class OnlineLoanDocumentController : ControllerBase
+public class OnlineDocumentController : ControllerBase
 {
-    public OnlineLoanDocumentController(IFileService<OnlineLoanDocument> fileService)
+    public OnlineDocumentController(IFileService<OnlineLoanDocument> fileService)
     {
         _fileService = fileService;
     }
 
     private readonly IFileService<OnlineLoanDocument> _fileService;
 
-    [HttpPost("SaveDocument")]
-    public async Task<IActionResult> SaveDocument([FromBody]OnlineLoanDocument document)
+    [HttpPost("SaveOnlineLoanDocument")]
+    public async Task<IActionResult> SaveOnlineLoanDocument([FromBody]OnlineLoanDocument document)
     {
         if (document == null)
             return BadRequest("Документ не загружен!");
