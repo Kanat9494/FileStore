@@ -1,17 +1,43 @@
-﻿namespace FileStore.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace FileStore.Services;
 
 public class OnlineLoanDocumentService : IFileService<OnlineLoanDocument>
 {
-    public Task<IActionResult> SaveFile(OnlineLoanDocument response)
+    public async Task<ResponseMessage> SaveFile(OnlineLoanDocument response)
     {
         try
         {
-            var filePath = Path.Combine("C:\\Users\\kkudaibergenov\\Desktop\\docs", response.ImageDate.ToString());
-            return Ok();
+            string directoryPath = $"C:\\Users\\kkudaibergenov\\Desktop\\docs\\{response.ClientITIN}";
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+
+                directoryPath = directoryPath + "\\" + "OnlineLoans";
+                if (!Directory.Exists(directoryPath)) 
+                    Directory.CreateDirectory(directoryPath);
+
+                directoryPath = directoryPath + "\\" + response.OnlineLoanId.ToString();
+                if (!Directory.Exists(directoryPath))
+                    Directory.CreateDirectory(directoryPath);
+            }
+            var fileName = response.FileName + ".jpg";
+            var filePath = Path.Combine($"C:\\Users\\kkudaibergenov\\Desktop\\docs\\{response.ClientITIN}\\OnlineLoans\\{response.OnlineLoanId}", fileName);
+            await File.WriteAllBytesAsync(filePath, response.ImageData);
+
+            return new ResponseMessage
+            {
+                StatusCode = System.Net.HttpStatusCode.OK,
+                Message = "Документ успешно загружен",
+            };
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return new ResponseMessage
+            {
+                StatusCode = System.Net.HttpStatusCode.BadRequest,
+                Message = ex.Message,
+            };
         }
     }
 }

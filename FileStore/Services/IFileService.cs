@@ -2,5 +2,5 @@
 
 public interface IFileService<TResponse>
 {
-    Task<IActionResult> SaveFile(TResponse response);
+    Task<ResponseMessage> SaveFile(TResponse response);
 }

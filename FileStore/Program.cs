@@ -8,7 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Регистрация сервисов для хранения файлов
-builder.Services.AddScoped(typeof(IFileService<OnlineLoanDocument>, typeof(OnlineLoanDocumentService));
+builder.Services.AddScoped(typeof(IFileService<OnlineLoanDocument>), typeof(OnlineLoanDocumentService));
 
 var app = builder.Build();
 
