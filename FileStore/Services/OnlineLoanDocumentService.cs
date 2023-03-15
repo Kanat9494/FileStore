@@ -21,6 +21,17 @@ public class OnlineLoanDocumentService : IFileService<OnlineLoanDocument>
                 if (!Directory.Exists(directoryPath))
                     Directory.CreateDirectory(directoryPath);
             }
+            else
+            {
+                directoryPath = directoryPath + "\\" + "OnlineLoans";
+                if (!Directory.Exists(directoryPath))
+                    Directory.CreateDirectory(directoryPath);
+
+                directoryPath = directoryPath + "\\" + response.OnlineLoanId.ToString();
+                if (!Directory.Exists(directoryPath))
+                    Directory.CreateDirectory(directoryPath);
+            }
+
             var fileName = response.FileName + ".jpg";
             var filePath = Path.Combine($"C:\\Users\\kkudaibergenov\\Desktop\\docs\\{response.ClientITIN}\\OnlineLoans\\{response.OnlineLoanId}", fileName);
             await File.WriteAllBytesAsync(filePath, response.ImageData);
