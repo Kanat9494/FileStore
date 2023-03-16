@@ -21,7 +21,7 @@ public class OnlineDocumentController : ControllerBase
 
         try
         {
-            var response = await _fileService.SaveFile(document);
+            var response = await _fileService.SaveFileAsync(document);
 
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
@@ -38,5 +38,16 @@ public class OnlineDocumentController : ControllerBase
                 Message = ex.Message
             });
         }
+    }
+
+    [HttpPost("DisplayImages")]
+    public async Task<IActionResult> DisplayImages([FromBody]ImageUrlRequest imageUrl)
+    {
+        var listOfFiles =  await _fileService.GetFilesAsync(imageUrl);
+
+        if (listOfFiles == null)
+            return NotFound("По данному пути не найдено файлов для отображения");
+
+        return Ok(listOfFiles);
     }
 }

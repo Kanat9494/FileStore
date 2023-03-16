@@ -2,5 +2,7 @@
 
 public interface IFileService<TResponse>
 {
-    Task<ResponseMessage> SaveFile(TResponse response);
+    Task<ResponseMessage> SaveFileAsync(TResponse response);
+
+    Task<List<byte[]>> GetFilesAsync(ImageUrlRequest imageUrl);
 }
