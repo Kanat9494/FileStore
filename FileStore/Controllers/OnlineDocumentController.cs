@@ -52,4 +52,9 @@ public class OnlineDocumentController : ControllerBase
     }
 
     //Test
+    [HttpGet("Test")]
+    public IActionResult Test()
+    {
+        return Ok("Работает");
+    }
 }
